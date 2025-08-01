@@ -2,9 +2,9 @@
 {
     public class PropertyUpdatedEvent: DomainEvent
     {
-        public Guid PropertyId { get; }
+        public int PropertyId { get; }
 
-        public PropertyUpdatedEvent(Guid propertyId)
+        public PropertyUpdatedEvent(int propertyId)
         {
             PropertyId = propertyId;
         }

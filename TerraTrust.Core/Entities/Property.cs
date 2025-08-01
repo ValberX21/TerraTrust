@@ -7,6 +7,7 @@ namespace TerraTrust.Core.Entities
 {
     public class Property : BaseEntity
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -14,7 +15,7 @@ namespace TerraTrust.Core.Entities
         public string Name { get; set; }
 
         [Required]
-        public PropertyType Type { get; set; }
+        public PropertyType Type { get; set; } 
 
         [Required]
         [MaxLength(50)]
@@ -24,7 +25,7 @@ namespace TerraTrust.Core.Entities
         public ZoningType ZoningType { get; set; }
 
         [MaxLength(50)]
-        public string TerrainProfile { get; set; }  // e.g., "Flat", "Hilly"
+        public string TerrainProfile { get; set; } = "";
 
         [Column(TypeName = "float")]
         public double AreaInSquareMeters { get; set; }
@@ -35,16 +36,20 @@ namespace TerraTrust.Core.Entities
         [Required]
         public PropertyStatus Status { get; set; }
 
+        [Required]
+        public int OwnerId { get; set; }
+
         //////////////////////////////////////////////////////////////////
 
-        public Property(string name, PropertyType type, string coordinates, ZoningType zoningType)
+        public Property(string name, PropertyType type, string coordinates, ZoningType zoningType, int ownerId)
         {
             Name = name;
             Type = type;
             Coordinates = coordinates;
             ZoningType = zoningType;
+            OwnerId = ownerId;
 
-            AddDomainEvent(new PropertyCreatedEvent(name, type, coordinates, zoningType));
+            AddDomainEvent(new PropertyCreatedEvent(name, type, coordinates, zoningType, ownerId));
         }
 
     }
