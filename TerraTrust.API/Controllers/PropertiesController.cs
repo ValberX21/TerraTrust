@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TerraTrust.Business.Commands;
+using TerraTrust.Business.Queries;
 
 namespace TerraTrust.API.Controllers
 {
@@ -23,6 +24,13 @@ namespace TerraTrust.API.Controllers
 
             var id = await _mediator.Send(command);
             return Created($"/api/properties/{id}", new { id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var result = await _mediator.Send(new GetAllPropertiesQuery());
+            return Ok(result);
         }
     }
 }
