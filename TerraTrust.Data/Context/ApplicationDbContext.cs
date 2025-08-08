@@ -2,16 +2,19 @@
 using TerraTrust.Core.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TerraTrust.Core.Events;
+using TerraTrust.Core.Interfaces;
 
 namespace TerraTrust.Data.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, IUnitOfWork
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
           : base(options)
         {
         }
 
+        public Task<int> SaveChangesAsync(CancellationToken ct = default)
+                                            => base.SaveChangesAsync(ct);
         public DbSet<Property> Properties { get; set; }
         public DbSet<Owner> Owners { get; set; }
 

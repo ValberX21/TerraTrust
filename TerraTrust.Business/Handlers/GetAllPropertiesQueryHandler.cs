@@ -16,9 +16,13 @@ namespace TerraTrust.Business.Handlers
             _propertyRepository = propertyRepository;
         }
 
-        public async Task<IEnumerable<PropertyDto>> Handle(GetAllPropertiesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<PropertyDto>> Handle(
+                            GetAllPropertiesQuery request,
+                            CancellationToken cancellationToken)
         {
-            var properties = await _propertyRepository.GetAllAsync();
+            var skip = (request.Page - 1) * request.PageSize;
+
+            var properties = await _propertyRepository.GetPagedAsync(skip, request.PageSize);
 
             return properties.Select(p => new PropertyDto
             {

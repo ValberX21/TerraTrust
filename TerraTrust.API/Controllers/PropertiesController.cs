@@ -23,14 +23,31 @@ namespace TerraTrust.API.Controllers
                 return BadRequest(ModelState);
 
             var id = await _mediator.Send(command);
+
             return Created($"/api/properties/{id}", new { id });
+
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int page = 1, int pageSize = 5)
         {
-            var result = await _mediator.Send(new GetAllPropertiesQuery());
+            var result = await _mediator.Send(new GetAllPropertiesQuery(page, pageSize));
             return Ok(result);
         }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById(int Id)
+        {
+            if (Id <= 0)
+                return BadRequest("Invalid property ID");
+
+            var property = await _mediator.Send(new GetPropertyByIdQuery(Id));
+            if (property == null)
+                return NotFound();
+
+            return Ok(property);
+        }
+
+
     }
 }

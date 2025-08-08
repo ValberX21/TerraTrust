@@ -18,38 +18,59 @@ namespace TerraTrust.Data.Repository
         {
             _context = context;
             _dbSet = context.Set<T>();
+
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<T> AddAsync(T entity, CancellationToken ct = default)
         {
-            return await _dbSet.ToListAsync();
+            await _dbSet.AddAsync(entity);     
+            return entity;
         }
 
-        public async Task<T?> GetByIdAsync(int id)
+        public async Task<IEnumerable<T>> GetPagedAsync(int page, int pagesize, CancellationToken ct = default)
+        {
+            return await _dbSet
+                 .AsNoTracking()
+                 .Skip(page)
+                 .Take(pagesize)
+                 .ToListAsync(ct);
+        }
+
+        public async Task<T?> GetByIdAsync(int id, CancellationToken ct = default)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<int> AddAsync(T entity)
+        public async Task<bool> RemoveAsync(int id, CancellationToken ct = default)
         {
-            await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return (_context.Entry(entity).Property("Id").CurrentValue as int?) ?? 0;
-        }
-
-        public async Task UpdateAsync(T entity)
-        {
-            _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var entity = await _dbSet.FindAsync(id);
+            var entity = await _dbSet.FindAsync(id);    
             if (entity != null)
             {
                 _dbSet.Remove(entity);
-                await _context.SaveChangesAsync();
+                return true;    
+            }
+            else
+            {
+                return false; 
+            }   
+
+        }
+
+        public async Task<bool> UpdateAsync(T entity, CancellationToken ct = default)
+        {
+            try
+            {
+                _dbSet.Update(entity);
+                return true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+
             }
         }
     }
