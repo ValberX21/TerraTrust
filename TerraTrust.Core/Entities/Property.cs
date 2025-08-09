@@ -52,5 +52,16 @@ namespace TerraTrust.Core.Entities
             AddDomainEvent(new PropertyCreatedEvent(name, type, coordinates, zoningType, ownerId));
         }
 
+        public void UpdateProperty(string name, PropertyType type, string coordinates, ZoningType zoningType, int ownerId)
+        {
+            Name = name;
+            Type = type;
+            Coordinates = coordinates;
+            ZoningType = zoningType;
+            OwnerId = ownerId;
+
+            AddDomainEvent(new PropertyUpdatedEvent(Id ,name, type, coordinates, zoningType, ownerId));
+        }
+
     }
 }

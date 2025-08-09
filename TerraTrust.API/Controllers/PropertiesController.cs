@@ -48,6 +48,32 @@ namespace TerraTrust.API.Controllers
             return Ok(property);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateProperty([FromBody] UpdatePropertyCommand command)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _mediator.Send(command);
+            if (!result)
+                return BadRequest("Something wrong in update");
+
+            return Ok("Register updated");
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            if (Id <= 0)
+                return BadRequest("Invalid property ID");
+
+            var result = await _mediator.Send(new DeletePropertyCommand(Id));
+            if (!result)
+
+                return NotFound();
+            return Ok("Register deleted");
+        }
+
 
     }
 }

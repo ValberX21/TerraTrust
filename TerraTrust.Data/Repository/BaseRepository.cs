@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraTrust.Core.Entities;
 using TerraTrust.Core.Interfaces.Repositories;
 using TerraTrust.Data.Context;
 
@@ -43,7 +44,8 @@ namespace TerraTrust.Data.Repository
 
         public async Task<bool> RemoveAsync(int id, CancellationToken ct = default)
         {
-            var entity = await _dbSet.FindAsync(id);    
+            var entity = await _dbSet.FindAsync(id); 
+            
             if (entity != null)
             {
                 _dbSet.Remove(entity);
@@ -60,7 +62,17 @@ namespace TerraTrust.Data.Repository
         {
             try
             {
-                _dbSet.Update(entity);
+                var obj = await _dbSet.FindAsync(entity.GetType().GetProperty("Id")?.GetValue(entity));
+                
+                if(obj == null)
+                {
+                    return false; 
+                }
+                else
+                {
+                    _dbSet.Update(obj);
+                }
+
                 return true;
             }
             catch (DbUpdateConcurrencyException)
