@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Polly.Caching;
 using System.Xml.Linq;
 using TerraTrust.Business.DTOs;
 using TerraTrust.Business.Queries;
@@ -8,7 +9,7 @@ using TerraTrust.Core.Interfaces.Repositories;
 
 namespace TerraTrust.Business.Handlers
 {
-    public class GetAllPropertiesQueryHandler : IRequestHandler<GetAllPropertiesQuery, IEnumerable<PropertyDto>>
+    public class GetAllPropertiesQueryHandler : IRequestHandler<GetAllPropertiesQuery, PagedResult<PropertyDto>>
     {
         private readonly IBaseRepository<Property> _propertyRepository;
         public GetAllPropertiesQueryHandler(IBaseRepository<Property> propertyRepository)
@@ -16,25 +17,26 @@ namespace TerraTrust.Business.Handlers
             _propertyRepository = propertyRepository;
         }
 
-        public async Task<IEnumerable<PropertyDto>> Handle(
-                            GetAllPropertiesQuery request,
-                            CancellationToken cancellationToken)
+        public async Task<PagedResult<PropertyDto>> Handle(GetAllPropertiesQuery request, CancellationToken cancellationToken)
         {
-            var skip = (request.Page - 1) * request.PageSize;
+            // var skip = (request.Page - 1) * request.PageSize;
 
-            var properties = await _propertyRepository.GetPagedAsync(skip, request.PageSize);
+            var totalRecords = await _propertyRepository.CountAsync();
 
-            return properties.Select(p => new PropertyDto
+            var properties = await _propertyRepository.GetPagedAsync(request.Page, request.PageSize);
+
+            var items = properties.Select(p => new PropertyDto
             {
                 Id = p.Id,
                 Name = p.Name,
-                Type = p.Type,
                 Coordinates = p.Coordinates,
-                ZoningType = p.ZoningType,
                 TerrainProfile = p.TerrainProfile,
                 AreaInSquareMeters = p.AreaInSquareMeters,
-                Value = p.Value
-            });
-        }
+                Value = p.Value,
+            }).ToList();
+
+            return new PagedResult<PropertyDto>(items, totalRecords, request.Page, request.PageSize);
+
+        }     
     }
 }

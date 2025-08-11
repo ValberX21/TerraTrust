@@ -10,7 +10,7 @@ using TerraTrust.Data.Context;
 
 namespace TerraTrust.Data.Repository
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         protected readonly ApplicationDbContext _context;
         protected readonly DbSet<T> _dbSet;
@@ -28,18 +28,23 @@ namespace TerraTrust.Data.Repository
             return entity;
         }
 
-        public async Task<IEnumerable<T>> GetPagedAsync(int page, int pagesize, CancellationToken ct = default)
+        public async Task<int> CountAsync(CancellationToken ct = default)
         {
-            return await _dbSet
-                 .AsNoTracking()
-                 .Skip(page)
-                 .Take(pagesize)
-                 .ToListAsync(ct);
+            return await _dbSet.AsNoTracking().CountAsync(ct); 
         }
 
         public async Task<T?> GetByIdAsync(int id, CancellationToken ct = default)
         {
             return await _dbSet.FindAsync(id);
+        }
+
+        public async Task<IReadOnlyList<T>> GetPagedAsync(int page, int pageSize, CancellationToken ct = default)
+        {
+            return await _dbSet.AsNoTracking()
+               .OrderBy(e => e.Id)          
+               .Skip((page -1 ) * pageSize)
+               .Take(pageSize)
+               .ToListAsync(ct);
         }
 
         public async Task<bool> RemoveAsync(int id, CancellationToken ct = default)
@@ -85,5 +90,6 @@ namespace TerraTrust.Data.Repository
 
             }
         }
+
     }
 }

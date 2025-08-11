@@ -11,6 +11,17 @@ using TerraTrust.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var corsPolicy = "DevCors";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicy, policy =>
+    {
+        policy.WithOrigins("http://localhost:4200") // Angular dev server
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+        // .AllowCredentials(); // only if you actually use cookies/auth
+    });
+});
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 
@@ -40,6 +51,8 @@ app.UseSwaggerUI(c =>
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsPolicy);
 
 app.UseAuthorization(); 
 

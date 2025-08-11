@@ -6,6 +6,7 @@ namespace TerraTrust.Core.Entities
     public abstract class BaseEntity
     {
         private readonly List<DomainEvent> _domainEvents = new();
+        public int Id { get; protected set; }
 
         [NotMapped]
         public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
