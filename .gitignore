@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /TerraTrust.API/appsettings.json
+/TerraTrust.Functions/Properties/launchSettings.json
+/TerraTrust.Functions/Properties/serviceDependencies.json
+/TerraTrust.Functions/Properties/serviceDependencies.local.json
