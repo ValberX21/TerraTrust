@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36301.6 d17.14
+VisualStudioVersion = 17.14.36301.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraTrust.Core", "TerraTrust.Core\TerraTrust.Core.csproj", "{7E2F662D-8DE0-437C-9D56-6CB00587A5CE}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraTrust.API", "TerraTrust.API\TerraTrust.API.csproj", "{5D360BDD-0B93-4236-B400-5FA5043BD297}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraTrust.Tests", "TerraTrust.Tests\TerraTrust.Tests.csproj", "{DE26C28E-4D49-4988-9B59-F59BC5394183}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraTrust.Messaging", "TerraTrust.Messaging\TerraTrust.Messaging.csproj", "{7BC28435-8625-4D3E-9136-E5D9A7D4375B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraTrust.Functions", "TerraTrust.Functions\TerraTrust.Functions.csproj", "{21FDFADD-C926-4B01-AA56-EA4154B911D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{DE26C28E-4D49-4988-9B59-F59BC5394183}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE26C28E-4D49-4988-9B59-F59BC5394183}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE26C28E-4D49-4988-9B59-F59BC5394183}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BC28435-8625-4D3E-9136-E5D9A7D4375B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BC28435-8625-4D3E-9136-E5D9A7D4375B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BC28435-8625-4D3E-9136-E5D9A7D4375B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BC28435-8625-4D3E-9136-E5D9A7D4375B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21FDFADD-C926-4B01-AA56-EA4154B911D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21FDFADD-C926-4B01-AA56-EA4154B911D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21FDFADD-C926-4B01-AA56-EA4154B911D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21FDFADD-C926-4B01-AA56-EA4154B911D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

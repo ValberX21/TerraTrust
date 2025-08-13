@@ -14,14 +14,17 @@ namespace TerraTrust.Business.Handlers
         private readonly IBaseRepository<Property> _propertyRepository;
         private readonly IBaseRepository<Owner> _ownerRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMessageBus _mesBus;
 
         public CreatePropertyHandler(IBaseRepository<Property> propertyRepository,
                                      IBaseRepository<Owner> ownerRepository,
-                                     IUnitOfWork unitOfWork)
+                                     IUnitOfWork unitOfWork,
+                                     IMessageBus mesBus)
         {
             _propertyRepository = propertyRepository;
             _ownerRepository = ownerRepository;
             _unitOfWork = unitOfWork;
+            _mesBus = mesBus;
         }
 
         public async Task<int> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
@@ -42,6 +45,7 @@ namespace TerraTrust.Business.Handlers
 
             await _propertyRepository.AddAsync(property);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+            await _mesBus.PublishAsync("property.created", property, property.Id.ToString(), cancellationToken);
 
             return property.Id;
         }

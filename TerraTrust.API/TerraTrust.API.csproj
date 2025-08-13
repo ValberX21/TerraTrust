@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TerraTrust.Business\TerraTrust.Business.csproj" />
     <ProjectReference Include="..\TerraTrust.Data\TerraTrust.Data.csproj" />
+    <ProjectReference Include="..\TerraTrust.Messaging\TerraTrust.Messaging.csproj" />
   </ItemGroup>
 
 </Project>
