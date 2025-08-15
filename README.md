@@ -68,3 +68,6 @@ https://localhost:5001/swagger
 Example endpoint:
 GET /api/properties?page=1&pageSize=10
 
+
+<img src="https://github.com/ValberX21/TerraTrust/TerraTrust.Core/img/terratrustapi.png" width="600" height="300"/>
+
