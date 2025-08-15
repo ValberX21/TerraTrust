@@ -4,7 +4,6 @@
 It implements a **CQRS + MediatR architecture** with a clean separation of concerns, aiming for scalability and maintainability.
 
 ![.NET](https://img.shields.io/badge/.NET-9.0-blue)
-![Angular](https://img.shields.io/badge/Angular-18-DD0031)
 ![Architecture](https://img.shields.io/badge/Architecture-CQRS%20%2B%20MediatR-green)
 
 ---
@@ -49,8 +48,7 @@ The backend follows **Clean Architecture principles** and is optimized for futur
 Angular Frontend → ASP.NET Core API → Application Layer → Domain Layer → Infrastructure Layer → SQL Server
 
 ## 🛠 Tech Stack
-- ✅ **Backend: .NET 7, ASP.NET Core, MediatR, CQRS
-- ✅ **Frontend: Angular 18
+- ✅ **Backend: .NET 9, ASP.NET Core, MediatR, CQRS
 - ✅ **Database: SQL Server
 - ✅ **Documentation: Swagger
 - ✅ **Testing: NUnit/xUnit
@@ -58,8 +56,7 @@ Angular Frontend → ASP.NET Core API → Application Layer → Domain Layer →
 
 ## 🚀 Installation
 Prerequisites
-- NET 7 SDK
-- Node.js 18+
+- NET 9 SDK
 - SQL Server
 
 ## 📚 API Documentation
